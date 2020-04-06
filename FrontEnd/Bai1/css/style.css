@@ -1,0 +1,62 @@
+* {
+  margin:0;
+  padding:0;
+}
+body {
+  font-family:sans-serif;
+}
+.fixed {
+  position:fixed;
+}
+.top {
+  top:0;
+}
+.left {
+  left:0;
+}
+.right {
+  right:0;
+}
+.bottom {
+  bottom:0;
+}
+.center-x {
+  left:50%;
+}
+.center-y {
+  top:50%;
+}
+.box {
+  background:yellow;
+  padding: 15px;
+  font-size:20px;
+  font-weight: bolder;
+  display:inline-block;
+}
+
+section, section > div {
+    position: absolute;
+}
+section {
+  padding: 20px 30px;
+  background: blue;
+  transform: translate(-50%, -50%);
+  font-size:23px;
+  font-weight:bold;
+  color:#fff;
+}
+section > div:nth-child(1) {
+  transform:translate(-100%, -100%);
+}
+section > div:nth-child(2) {
+  transform:translate(100%, -100%);
+}
+section > div:nth-child(3) {
+  transform:translate(-100%, 100%);
+}
+section > div:nth-child(4) {
+  transform:translate(100%, 100%);
+}
+.bg-purple {
+  background: purple;
+}
