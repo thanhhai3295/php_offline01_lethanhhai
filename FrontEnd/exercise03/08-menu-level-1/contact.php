@@ -7,29 +7,9 @@
   </head>
   <body>
   <?php 
-
-    include '../data.php';
+      include 'html/menu.php';
+      include 'html/breadcrumb.php';
   ?>
-
-    <div class="menuBackground">
-        <div class="center">
-          <ul class="dropDownMenu">
-          <?php foreach($arrMenu as $key => $value) {
-              if ($key == 'contact') {
-                echo '<li class="active"><a href="'.$key.'.php">'.$value["name"].'</a></li>';
-              }else {
-                echo '<li><a href="'.$key.'.php">'.$value["name"].'</a></li>';
-              }
-              
-          } ?>
-          </ul>
-        </div>
-    </div>
-    <div class="breadcrumb">
-    <a href="index.php">Home</a>
-    <span> > </span>
-    <span>Contact</span>
-    </div>
 
     <h3>Contact</h3>
   </body>

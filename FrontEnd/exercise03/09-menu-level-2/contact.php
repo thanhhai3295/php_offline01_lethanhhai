@@ -7,50 +7,9 @@
   </head>
   <body>
     <?php 
-        include '../data.php';
-    ?>
-    <div class="menuBackground">
-        <div class="center">
-          <ul class="dropDownMenu">
-          <?php foreach($arrMenu as $key => $value) {
-              if ($key == 'contact') {
-                echo '<li class="active"><a href="'.$key.'.php">'.$value["name"].'</a>';
-              }else {
-                echo '<li><a href="'.$key.'.php">'.$value["name"].'</a>';
-
-              }
-
-              if (!empty($value['child'])) {
-                echo '<ul>';
-                foreach($value["child"] as $key01 => $value01) {
-                  echo '<li><a href="'.$key01.'.php">'.$value01["name"].'</a></li>';
-                }
-                echo '</ul>';
-            }
-              echo '</li>';  
-          } ?>
-              <!-- <li ><a href="index.php">Home </a></li>
-              <li class="active">
-                <a href="data/about.php">About</a>
-                <ul>
-                    <li>
-                      <a href="data/service.php">Service</a>
-                    </li>
-                    <li>
-                      <a href="data/company.php">Company</a>
-                    </li>
-                </ul>
-              </li>
-              <li ><a href="data/contact.php">Contact </a></li> -->
-          </ul>
-        </div>
-    </div>
-    <div class="breadcrumb">
-        <a href="index.php">Home</a>
-        <span> > </span>
-        <a href="Contact.php">Contact</a>
-    </div>
-
-    <h3>Contact</h3>
+        include 'html/menu.php';
+        include 'html/breadcrumb.php';
+    ?>         
+    <h3>contact</h3>
   </body>
 </html>

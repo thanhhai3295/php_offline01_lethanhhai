@@ -5,7 +5,7 @@
         ],
         'about' => [
             "name"  => "About",  
-            "link"  => "data/about.php", 
+            "link"  => "about.php", 
             "child" => [
                 'service'   => [ 
                     "name"  => "Service", 
@@ -25,17 +25,16 @@
         'contact' => ["name" => "Contact", "link" => "contact.php"]
     ];
 
-    // Yêu cầu: In ra đường đi đến Menu Training
-    // Output: Home > About > Service > Training
-    $CurrentMenu = 'training';
+    $path = $_SERVER["PHP_SELF"];
+    $menuCurrent = basename($path, ".php"); 
     $arrBreadCrumb = [];
-    foreach($arrMenu as $keyLevelOne => $menuLevelOne){
+    foreach($arrMenu as $keyLevelOne => $menuLevelOne) {
         $arrBreadCrumb[$keyLevelOne][] = $menuLevelOne['name'];
-        if(isset($menuLevelOne['child'])) {
-            foreach($menuLevelOne['child'] as $keyLevelTwo => $menuLevelTwo){
+        if (isset($menuLevelOne['child'])) {
+            foreach($menuLevelOne['child'] as $keyLevelTwo => $menuLevelTwo) {
                 $arrBreadCrumb[$keyLevelTwo][] = $menuLevelOne['name'];
                 $arrBreadCrumb[$keyLevelTwo][] = $menuLevelTwo['name'];
-                if(isset($menuLevelTwo['child'])) {
+                if (isset($menuLevelTwo['child'])) {
                     foreach($menuLevelTwo['child'] as $keyLevelThree => $menuLevelThree) {
                         $arrBreadCrumb[$keyLevelThree][] = $menuLevelOne['name'];
                         $arrBreadCrumb[$keyLevelThree][] = $menuLevelTwo['name'];
@@ -45,7 +44,6 @@
             }
         }
     }
-    $breadCrumb = $arrBreadCrumb[$CurrentMenu];
-    echo '<pre>';
-    print_r($breadCrumb);
-    echo '</pre>';
+    
+    $currentBreadCrumb = $arrBreadCrumb[$menuCurrent];
+?>

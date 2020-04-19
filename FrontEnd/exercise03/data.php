@@ -5,7 +5,7 @@
         ],
         'about' => [
             "name"  => "About",  
-            "link"  => "data/about.php", 
+            "link"  => "about.php", 
             "child" => [
                 'service'   => [ 
                     "name"  => "Service", 
@@ -24,4 +24,6 @@
         ]],
         'contact' => ["name" => "Contact", "link" => "contact.php"]
     ];
+
+
 ?>
