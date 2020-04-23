@@ -22,14 +22,17 @@
 					
 				}else{
 					$ext = strtolower(pathinfo($value,PATHINFO_EXTENSION));
-				
-					if($ext == 'txt' || $ext == 'doc' || $ext == 'ini') {
-						$newString .= '<li><i class="far fa-file-alt"></i> ' . $value . '</li>';
-					}else if($ext == 'mp3' || $ext == 'mp4' || $ext == 'avi') {
-						$newString .= '<li><i class="fab fa-youtube"></i> ' . $value . '</li>';
-					}else if($ext == 'png' || $ext == 'jpg' || $ext == 'jpeg') {
-						$newString .= '<li><i class="far fa-image"></i> ' . $value . '</li>';
+					$arrExt = array(
+						'far fa-file-alt' => ['txt','doc','ini'],
+						'fab fa-youtube' => ['mp3','mp4','avi'],
+						'far fa-image' => ['png','jpg','jpeg']
+					);
+					foreach($arrExt as $key => $v) {
+						if(in_array($ext, $v)) {
+							$newString .= '<li><i class="'.$key.'"></i> ' . $value . '</li>';
+						}
 					}
+					
 				}
 			}
 		}

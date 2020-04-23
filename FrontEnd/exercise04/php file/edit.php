@@ -25,7 +25,7 @@
 	$content = explode('||',$content);
 	$title = $content[0];
 	$description = $content[1];
-	$image = $content[2];
+	
 	if (isset($_POST["submit"])) {
 		$title = $_POST["title"];
 		$description 	= $_POST["description"];
@@ -43,14 +43,27 @@
 			$errorDescription .= '<p class="error">Chieu dai description khong dung</p>';
 		}
 		
-		$files = $_FILES['uploadFile'];
-		if(!checkImage($files['name'])) $errorImage .= '<p class="error">xin chon file anh</p>'; 
+		$dataImg = '';
+
+		if($_FILES['uploadFile']['error'] == 4) {
+			$image = $content[2];
+			$dataImg = $image;
+		}else {
+			$files = $_FILES['uploadFile'];
+			$image = $files['name'];
+			if(!checkImage($files['name'])) $errorImage .= '<p class="error">xin chon file anh</p>'; 
+			move_uploaded_file($files['tmp_name'],'./images/'.time().$image);
+			if(file_exists("./images/$image")) unlink("./images/$image");
+			$dataImg = time().$image;
+		}
+		
+		
 		if($errorTitle == '' && $errorDescription == '' && $errorImage == '') {
-			$data = $title.'||'.$description.'||'.time().$files['name'];
+			$data = $title.'||'.$description.'||'.$dataImg;
 			
 			$filename = './files/'.$id.'.txt';
-			move_uploaded_file($files['tmp_name'],'./images/'.time().$files['name']);
-			if(file_exists("./images/$image")) unlink("./images/$image");
+			
+			
 			if (file_put_contents($filename,$data)) {
 				$title = '';
 				$description = '';
