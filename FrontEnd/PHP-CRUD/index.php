@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 	<style>
+		.red {
+			color:red;
+			font-weight: bold;
+		}
 		.anima {
 			animation:blink 0.35s ease-in;
 		}
@@ -33,6 +37,10 @@
 			<div class="card-body">
 				<div class="col-sm-12">
 					<form method="get" class="clearfix mb-0">			
+					<div class="float-left">		
+						<input type="text" size="30" onkeyup="showResult(this.value)" placeholder=" search">
+						<div ></div>
+					</div>
 						<div class="float-right">
 							<a href="add.php" class="btn btn-primary"><i class="fas fa-plus"></i> Add User</a>
 							<a href="#" id="multi-delete" class="btn btn-danger"><i class="fas fa-times"></i> Delete User</a>
@@ -60,28 +68,20 @@
 						<th class="text-center">Action</th>
 					</tr>
 				</thead>
-				<tbody class="anima">
+				<tbody class="anima" id="livesearch">
 					<form action="multi-delete.php" id="main-form" method="POST">
-
+					
 					<?php include './list.php'; ?>
 					</form>
 				</tbody>
 			</table>
 
-			<nav aria-label="..." class="clearfix">
-				<ul class="pagination float-right">
-						<li class="page-item disabled">
-							<span class="page-link">Previous</span>
-						</li>
+			
 						
 						<?php  
 							include './pagination.php';
 						?>
-						<li class="page-item">
-							<a class="page-link" href="#">Next</a>
-						</li>
-				</ul>
-			</nav>
+	
 
 		</div> <!--/.col-sm-12-->
 		
@@ -104,5 +104,19 @@
 		});
 	</script>
     
+<script>
+function showResult(str) {
+
+  var xmlhttp=new XMLHttpRequest();
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("livesearch").innerHTML=this.responseText;
+
+    }
+  }
+  xmlhttp.open("GET","livesearch.php?q="+str,true);
+  xmlhttp.send();
+}
+</script>
 </body>
 </html>
