@@ -1,13 +1,10 @@
 <?php 
-  include './database/connectDB.php';
+  include './database/MysqliDb.php';
+  include './modal/UserModel.php';
   if (isset($_POST['checkbox'])) {
-    $checkbox = $_POST['checkbox'];
-    foreach ($checkbox as $key => $value) {
-      $id = $value;
-      $db->where('id', $id);
-      $db->delete('users');
-    }
-    header('location: index.php');
+    $params['id'] = $_POST['checkbox'];
+    $UserModel = new UserModel();
+    $UserModel->multiDeleteItem($params);
   } else {
     header('location: index.php');
   }

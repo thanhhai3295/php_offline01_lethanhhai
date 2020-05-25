@@ -1,8 +1,10 @@
 <?php 
-	include './database/connectDB.php';
+	include 'database/MysqliDb.php';
+	include 'modal/UserModel.php';
 	if (isset($_GET['id'])) {
-		$id = $_GET['id'];
-		$db->where('id', $id);
-		if($db->delete('users')) header('location: index.php');
+		$params['id'] = $_GET['id'];
+		$UserModel = new UserModel();
+		$UserModel->deleteItem($params);
 	}
+
 ?>

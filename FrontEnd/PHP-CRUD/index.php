@@ -29,7 +29,6 @@
 </head>
 
 <body>
-	
   <div class="container">
 		<h1 class="my-3"><a href="#">PHP CRUD</a></h1>
 		<div class="card">
@@ -71,7 +70,7 @@
 				<tbody class="anima" id="livesearch">
 					<form action="multi-delete.php" id="main-form" method="POST">
 					
-					<?php include './list.php'; ?>
+					<?php include './html/list.php'; ?>
 					</form>
 				</tbody>
 			</table>
@@ -79,7 +78,7 @@
 			
 						
 						<?php  
-							include './pagination.php';
+							include './html/pagination.php';
 						?>
 	
 
@@ -106,17 +105,36 @@
     
 <script>
 function showResult(str) {
-
   var xmlhttp=new XMLHttpRequest();
   xmlhttp.onreadystatechange=function() {
     if (this.readyState==4 && this.status==200) {
       document.getElementById("livesearch").innerHTML=this.responseText;
-
     }
   }
   xmlhttp.open("GET","livesearch.php?q="+str,true);
   xmlhttp.send();
 }
+
+	$(document).ready(function() {
+		$('table').click(function(e) {
+				if (e.target.nodeName == 'A' && e.target.parentNode.nodeName == 'TD' && e.target.parentNode.className=='text-center status') {
+				var status = e.target.getAttribute('status');
+				var id = e.target.getAttribute('id');
+					$.ajax({
+							url: 'status.php',
+							type: 'GET',
+							dataType: 'html',
+							data: {
+									status: status,
+									id: id
+							}
+					}).done(function(result) {
+							$(e.target).parent().html(result);
+					});
+				}
+		});
+  });
+
 </script>
 </body>
 </html>
