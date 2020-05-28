@@ -4,6 +4,7 @@
               <span class="page-link">Previous</span>
             </li>
 <?php 
+  
   $str = '';
   $active = '';
   for($i = 1; $i <= $totalPage; $i++) {
@@ -14,8 +15,19 @@
     }else {
       $active = '';
     }
-    $str .= '<li class="page-item '.$active.'"><a class="page-link" href="index.php?page='.$i.'">'.$i.'</a></li>';
+    
+    if(isset($_GET['search'])) {
+      $search = $_GET['search'];
+      $str .= '<li class="page-item '.$active.'"><a class="page-link" href="index.php?page='.$i.'&search='.$search.'">'.$i.'</a></li>';
+    }else if(isset($_GET['filter'])) {
+      $filter = $_GET['filter'];
+      $str .= '<li class="page-item '.$active.'"><a class="page-link" href="index.php?page='.$i.'&filter='.$filter.'">'.$i.'</a></li>';
+    }else {
+      $str .= '<li class="page-item '.$active.'"><a class="page-link" href="index.php?page='.$i.'">'.$i.'</a></li>';
+    }
+    
   }
+  
   echo $str;
 ?>
 

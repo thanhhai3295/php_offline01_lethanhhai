@@ -10,7 +10,6 @@
 
 	<title>PHP CRUD</title>
 
-	
 
 	<link rel="shortcut icon" href="https://demo.learncodeweb.com/favicon.ico">
 
@@ -32,54 +31,21 @@
 </head>
 
 <body>
-<?php 
-	if(isset($_GET['id'])) {
-		$id = $_GET['id'];
-		include './database/connectDB.php';
-		$db->where ("id", $id);
-		$users = $db->get('users');
-		foreach ($users as $key => $value) {
-			$name 		= $value['name'];
-			$status 	= $value['status'];
-			$ordering = $value['ordering'];
-		}
-		if(isset($_POST['submit'])) {
-			$name			= $_POST['name'];
-			$ordering = $_POST['ordering'];
-			$status	  = $_POST['chkStatus'];
-			$error 		= [];
-			if(trim($name) == '') 		$error['name'] 		 = 'Please Enter Name';
-			if(trim($ordering) == '') $error['ordering'] = 'Please Enter Ordering';
-			if(empty($error)) {
-				$params = array($name, $id);
-				$users = $db->rawQuery('SELECT * FROM users WHERE name = ? AND id != ?', $params);
-				if(empty($users)) {
-					$data = Array ("name" => $name,
-												"status" => (int)$status,
-												"ordering" => $ordering
-									);
-					$db->where ('id', $id);				
-					$execute = $db->update ('users', $data);
-					if($execute) header('location: index.php');
-				}else {
-					$error['name']  = 'Same Name Exist';
-				}
-			}
-		}
-	}else {
-		header('location: index.php');
-	}
 
-?>
+<?php include './process_save.php'; ?>
    	<div class="container">
 
 		<h1 class="my-3"><a href="#">PHP CRUD</a></h1>
 
-	
 
 		<div class="card">
 
-			<div class="card-header"><i class="fa fa-fw fa-plus-circle"></i> <strong>Edit User</strong></div>
+			<div class="card-header"><i class="fa fa-fw fa-plus-circle"></i> <strong><?php
+
+			if(isset($_GET['id'])) echo 'Edit User';
+			else echo 'Add User'; 
+
+			?></strong></div>
 
 			<div class="card-body">
 
@@ -92,13 +58,20 @@
 					<form method="post" action="">
 
 						<div class="form-group ">
-
+							<input type="hidden" name="id" value="<?php 
+								if(isset($params['id'])) echo $params['id'];
+							?>">
 							<label>Name <span class="text-danger">*</span></label>
 							<div class="position-relative">
-								<input type="text" name="name" class="form-control" placeholder="Enter Name" value="<?php 
-									if (isset($_POST['name'])) echo $_POST['name'];	
-									else echo $name; 											
+								<input type="text" name="name" class="form-control" placeholder="Enter Name" value="<?php  
+									if(isset($params['name'])) {
+										echo $params['name'];
+									}else {
+										echo '';
+									}
 								?>">
+		
+								
 								<p class="text-danger position-absolute" style="top:50%;transform:translateY(-50%);right:-30%;"><?php if (isset($error['name'])) echo $error['name']; ?></p>
 							</div>
 							
@@ -111,12 +84,20 @@
 
 							<select class="custom-select" name="chkStatus">
 								<option value="1" <?php 
-									if(isset($_POST['chkStatus']) && $_POST['chkStatus'] == 1) echo 'selected';
-									elseif($status == 1) echo 'selected';
+									if(isset($params['status']) && $params['status'] == 1) {
+										echo 'selected';
+									}
+									else {
+										echo '';
+									}
 								?> >Active</option>
 								<option value="0" <?php 
-									if(isset($_POST['chkStatus']) && $_POST['chkStatus'] == 0) echo 'selected';
-									elseif($status == 0) echo 'selected';
+									if(isset($params['status']) && $params['status'] == 0) {
+										echo 'selected';
+									}
+									else {
+										echo '';
+									}
 								?> >Inactive</option>
 							</select>
 
@@ -127,8 +108,11 @@
 							<label>Ordering <span class="text-danger">*</span></label>
 							<div class="position-relative">
 								<input type="text" name="ordering" class="form-control" placeholder="Enter Ordering" value="<?php 
-									if (isset($_POST['ordering'])) echo $_POST['ordering'];	
-									else echo $ordering;
+									if(isset($params['ordering'])) {
+										echo $params['ordering'];
+									}else {
+										echo '';
+									}
 								?>">
 								<p class="text-danger position-absolute" style="top:50%;transform:translateY(-50%);right:-34%;"><?php if (isset($error['ordering'])) echo $error['ordering']; ?></p>
 							</div>
@@ -137,7 +121,10 @@
 
 						<div class="form-group">
 
-							<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary"><i class="fa fa-fw fa-plus-circle"></i> Edit User</button>
+							<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary"><i class="fa fa-fw fa-plus-circle"></i> <?php 
+								if(isset($_GET['id'])) echo 'Edit User';
+								else echo 'Add User'; 
+							?></button>
 							
 						</div>
 
