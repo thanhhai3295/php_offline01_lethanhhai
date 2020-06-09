@@ -4,6 +4,7 @@
 	define ('DS'				, DIRECTORY_SEPARATOR);
 	
 	define ('ROOT_PATH'			, dirname(__FILE__));						// Định nghĩa đường dẫn đến thư mục gốc
+	
 	define ('LIBRARY_PATH'		, ROOT_PATH . DS . 'libs' . DS);			// Định nghĩa đường dẫn đến thư mục thư viện
 	define ('CONTROLLER_PATH'	, ROOT_PATH . DS . 'controllers' . DS);		// Định nghĩa đường dẫn đến thư mục controllers
 	define ('MODEL_PATH'		, ROOT_PATH . DS . 'models' . DS);			// Định nghĩa đường dẫn đến thư mục models
@@ -13,10 +14,17 @@
 	define	('ROOT_URL'			, DS . 'mvc');
 	define	('PUBLIC_URL'		, ROOT_URL . DS . 'public' . DS);
 	define	('VIEW_URL'			, ROOT_URL . DS . 'views' . DS);
-
-	// ====================== DATABASE ===========================
 	define ('DB_HOST'			, 'localhost');
-	define ('DB_USER'			, 'root');						
-	define ('DB_PASS'			, '');						
-	define ('DB_NAME'			, 'test_crud');						
-	define ('DB_TABLE'			, 'users');						
+	// ====================== DATABASE ===========================
+	if ($_SERVER['HTTP_HOST'] == "localhost") {
+		define ('DB_USER'			, 'root');						
+		define ('DB_PASS'			, '');						
+		define ('DB_NAME'			, 'test_crud');						
+		define ('DB_TABLE'		, 'users');						
+	} else {
+		define ('DB_USER'			, 'thanhhai_test');						
+		define ('DB_PASS'			, '123456');						
+		define ('DB_NAME'			, 'thanhhai_test');						
+		define ('DB_TABLE'		, 'users');
+	}
+	
