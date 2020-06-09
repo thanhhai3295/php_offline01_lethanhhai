@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody class="anima" id="livesearch">
-    <form action="index.php?controller=users&action=multiDelete" id="main-form" method="POST">
+    <form action="<?php echo URL::setURL('users','multiDelete') ?>" id="main-form" method="POST">
 <?php 
     $items = $this->items;
     $xhtml = '';
@@ -36,8 +36,8 @@
                   <td class="text-center status">'.$status.'</td>
                   <td class="text-center">'.$ordering.'</td>
                   <td class="text-center">
-                  <a href="index.php?controller=users&action=form&id='.$id.'" class="text-primary"><i class="fa fa-fw fa-edit"></i> Edit</a> | 
-                  <a href="index.php?controller=users&action=delete&id='.$id.'" class="text-danger"><i class="fa fa-fw fa-trash"></i> Delete</a>
+                  <a href='.URL::setURL('users','form',['id'=>$id]).' class="text-primary"><i class="fa fa-fw fa-edit"></i> Edit</a> | 
+                  <a href='.URL::setURL('users','delete',['id'=>$id]).' class="text-danger"><i class="fa fa-fw fa-trash"></i> Delete</a>
                   </td>
                 </tr>';
       }

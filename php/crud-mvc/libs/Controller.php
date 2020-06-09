@@ -1,12 +1,13 @@
 <?php
 class Controller{
-	
+	public $name;
 	public function __construct(){
 		$this->view = new View();
 	}
 	
 	public function loadModel($name){
 		$path = MODEL_PATH . $name.'_model.php';
+		$this->name = $name;
 		$modelName = ucfirst($name) . '_Model';
 		if(file_exists($path)){
 			require_once $path;

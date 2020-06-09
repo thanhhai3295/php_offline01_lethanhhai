@@ -5,7 +5,7 @@
 					<form method="get" action="" class="clearfix mb-0">			
 					
 						<div class="float-right">
-							<a href="index.php?controller=users&action=form" class="btn btn-primary"><i class="fas fa-plus"></i> Add User</a>
+							<a href="<?php echo URL::setURL('users','form') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Add User</a>
 							<a href="#" id="multi-delete" class="btn btn-danger"><i class="fas fa-times"></i> Delete User</a>
 						</div>
 					</form>

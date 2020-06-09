@@ -13,9 +13,9 @@
           </div>
         </div>
       </div>
-        <div class="float-right">
-          <a href="index.php?controller=users&action=index&filter=1" class="btn btn-outline-primary filter <?php HTML::holdStatus(1); ?> ">Active(<?php HTMl::countStatus(1) ?>)</a>
-          <a href="index.php?controller=users&action=index&filter=0" class="btn btn-outline-danger filter <?php HTML::holdStatus(0); ?> ">Inactive(<?php HTMl::countStatus(0) ?>)</a>
+        <div class="float-right"> 
+          <a href="<?php echo URL::setURL('users','index',['filter'=>'1']) ?>" class="btn btn-outline-primary filter <?php HTML::holdStatus(1); ?> ">Active(<?php HTMl::countStatus(1) ?>)</a>
+          <a href="<?php echo URL::setURL('users','index',['filter'=>'0']) ?>" class="btn btn-outline-danger filter <?php HTML::holdStatus(0); ?> ">Inactive(<?php HTMl::countStatus(0) ?>)</a>
         </div>
       </form>
     </div>

@@ -24,12 +24,9 @@
 
 		<div class="card">
 
-			<div class="card-header"><i class="fa fa-fw fa-plus-circle"></i> <strong><?php
-
-			if(isset($this->id)) echo 'Edit User';
-			else echo 'Add User'; 
-
-			?></strong></div>
+			<div class="card-header"><i class="fa fa-fw fa-plus-circle"></i> <strong>
+			<?php echo (isset($_GET['id'])? 'Edit User' : 'Add User')	?>
+			</strong></div>
 
 			<div class="card-body">
 
@@ -45,65 +42,37 @@
 
 							<label>Name <span class="text-danger">*</span></label>
 							<div class="position-relative">
-								<input type="text" name="name" class="form-control" placeholder="Enter Name" value="<?php  
-									if(isset($this->name)) echo $this->name;
-										else echo '';
-								?>">
-		
-								
-								<p class="text-danger position-absolute" style="top:50%;transform:translateY(-50%);right:-30%;"><?php if (isset($this->error['name'])) echo $this->error['name']; ?></p>
+								<?php 
+									HTML::input('text','name',isset($this->name)?$this->name:'','Enter Name');
+									HTML::error(isset($this->error['name']) ? $this->error['name'] : '');  
+								?>
 							</div>
 							
 							
 						</div>
+					
 
 						<div class="form-group">
 
 							<label>Status <span class="text-danger">*</span></label>
-
-							<select class="custom-select" name="chkStatus">
-								<option value="1" <?php 
-									if(isset($this->status) && $this->status == 1) {
-										echo 'selected';
-									}
-									else {
-										echo '';
-									}
-								?> >Active</option>
-								<option value="0" <?php 
-									if(isset($this->status) && $this->status == 0) {
-										echo 'selected';
-									}
-									else {
-										echo '';
-									}
-								?> >Inactive</option>
-							</select>
-
+							<?php HTML::select(isset($this->status) ? $this->status : '') ?>
 						</div>
 
 						<div class="form-group">
 
 							<label>Ordering <span class="text-danger">*</span></label>
 							<div class="position-relative">
-								<input type="text" name="ordering" class="form-control" placeholder="Enter Ordering" value="<?php 
-									if(isset($this->ordering)) {
-										echo $this->ordering;
-									}else {
-										echo '';
-									}
-								?>">
-								<p class="text-danger position-absolute" style="top:50%;transform:translateY(-50%);right:-34%;"><?php if (isset($this->error['ordering'])) echo $this->error['ordering']; ?></p>
+								<?php 
+									HTML::input('text','ordering',isset($this->ordering)?$this->ordering:'','Enter ordering'); 
+									HTML::error(isset($this->error['ordering']) ? $this->error['ordering'] : ''); 
+								?>
 							</div>
 
 						</div>
 
 						<div class="form-group">
 
-							<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary"><i class="fa fa-fw fa-plus-circle"></i> <?php 
-								if(isset($_GET['id'])) echo 'Edit User';
-								else echo 'Add User'; 
-							?></button>
+							<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary"><i class="fa fa-fw fa-plus-circle"></i> <?php echo (isset($_GET['id'])? 'Edit User' : 'Add User')	?></button>
 							
 						</div>
 

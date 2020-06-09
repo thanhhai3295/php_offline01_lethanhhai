@@ -1,19 +1,28 @@
 <?php
 class Users_Model extends Model{
-	public $tableName = 'users';
+	
 	public function __construct(){
 		parent::__construct();
 	}
-	public function list($page) {
+	public function list($params) {
+		if($params['page'] <= 0) header('location: index.php');
 		$this->pageLimit = 4;
+		if(isset($params['search'])) {
+			$search = $params['search'];
+			$this->where ("name", "%$search%", 'like');
+		}
+		if(isset($params['filter'])) {
+			$filter = $params['filter'];
+			$this->where ('status',$filter);
+		}
 		$this->orderBy("id","desc");
-		$result = $this->arraybuilder()->paginate("$this->tableName", $page);
+		$result = $this->arraybuilder()->paginate("users", $params['page']);
 		return $result;
 	}
 
-	public function changeStatus($id, $status){
-			$params = array($status, $id);
-			$this->rawQuery('UPDATE users SET status = ? WHERE id = ?', $params);
+	public function changeStatus($params){
+			$arr = array($params['status'], $params['id']);
+			$this->rawQuery('UPDATE users SET status = ? WHERE id = ?', $arr);
 	}
 
 	public function processItem($params) {
@@ -27,5 +36,17 @@ class Users_Model extends Model{
 			}else {
 				$execute = $this->insert ('users', $data);
 			}
+	}
+	public function deleteUser($id){
+		$this->where('id', $id);
+		$this->delete('users');
+	}
+	public function multiDeleteUser($arrayID){
+		$this->where('id', $arrayID, 'IN');
+		$this->delete('users');
+	}
+	public function getItem($id) {
+		$this->where ("id", $id);
+		return $this->get('users');
 	}
 }

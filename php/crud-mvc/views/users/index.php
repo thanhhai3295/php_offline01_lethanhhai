@@ -6,6 +6,5 @@
     include 'views/users/html/action.php';
     include 'views/users/html/list.php';
     include 'views/users/html/pagination.php';
-    
   ?>
 </div>

@@ -61,5 +61,22 @@
 			}
 			echo $url;
 		}
+		public static function input($type, $name, $value, $placeholder){	
+			$xhtml = '<input type="'.$type.'" name="'.$name.'" class="form-control" value="'.$value.'" placeholder="'.$placeholder.'" />';
+			echo $xhtml;
+		}
+		public static function error($error) {
+			echo '<p class="text-danger position-absolute" style="top:50%;transform:translateY(-50%);right:-34%;width:160px">'.$error.'</p>';
+		}
+		public static function select($option) {
+			$data = ['1' => 'active', '0' => 'inactive'];
+			$xhtml = '<select class="custom-select" name="chkStatus">';
+			foreach($data as $key => $value) {
+				$select = ($option == $key) ? 'selected' : '';
+				$xhtml .= '<option value="'.$key.'"'.$select.'>'.ucfirst($value).'</option>';
+			}
+			$xhtml .= '</select>';
+			echo $xhtml;
+		}
 	}	
 ?>
