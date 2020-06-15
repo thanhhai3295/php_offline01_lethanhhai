@@ -6,10 +6,12 @@
   <?php echo $this->_title;?>
   <?php echo $this->_cssFiles;?>
   <?php echo $this->_jsFiles;?>
+
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
 
+<div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -35,9 +37,9 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
-      <?php // include './html/message.php' ?>
+      <?php  include 'html/message.php' ?>
       <!-- Notifications Dropdown Menu -->
-      <?php // include './html/notifications.php' ?>
+      <?php  include 'html/notifications.php' ?>
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
@@ -52,29 +54,12 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+  <?php
+    require_once APPLICATION_PATH. $this->_moduleName . DS . 'views' . DS .  $this->_fileView . '.php';
+    
+  ?>
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <?php include 'html/dashboard.php'; ?>
-          <div class="col-sm-6">
-            <?php include 'html/breadcumb.php'; ?>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <?php include 'html/box.php'; ?>
-        <!-- Main row -->
-        
-        <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
-    </section>
+    
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -88,4 +73,9 @@
 </div>
 <!-- ./wrapper -->
 
-<?php include 'html/script.php'; ?>
+<?php //  include 'html/script.php';?>
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+</body>
+</html>

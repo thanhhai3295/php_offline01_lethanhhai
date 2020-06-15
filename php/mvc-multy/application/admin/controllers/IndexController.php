@@ -7,8 +7,14 @@ class IndexController extends Controller{
 		$this->_templateObj->setFileConfig('template.ini');
 		$this->_templateObj->load();
 	}
-	public function indexAction(){
-		$this->_view->render('index/index');
+	public function dashboardAction(){
+		$this->_view->render('index/dashboard');
+	}
+	public function listAction(){
+		$this->_view->render('index/list');
+	}
+	public function formAction(){
+		$this->_view->render('index/form');
 	}
 	
 	public function addAction(){
