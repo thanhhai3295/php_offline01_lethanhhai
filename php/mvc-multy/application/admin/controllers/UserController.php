@@ -10,8 +10,6 @@ class UserController extends Controller{
 	}
 	
 	public function loginAction(){
-		echo '<h3>' . __METHOD__ . '</h3>';
-
 		$this->_view->setTitle('Login');
 		$this->_view->appendCSS(array('user/css/abc.css'));
 		$this->_view->appendJS(array('user/js/test.js'));
