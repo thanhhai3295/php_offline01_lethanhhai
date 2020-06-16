@@ -8,7 +8,7 @@
 	define ('APPLICATION_PATH'	, ROOT_PATH . DS . 'application' . DS);		// Định nghĩa đường dẫn đến thư mục public							
 	define ('TEMPLATE_PATH'		, PUBLIC_PATH . 'template' . DS);		// Định nghĩa đường dẫn đến thư mục public							
 	
-	define	('ROOT_URL'			, DS . 'git/php_offline01_lethanhhai/php/mvc-multy' . DS);
+	define	('ROOT_URL'			, DS . 'git/php/mvc-multy' . DS);
 	define	('APPLICATION_URL'	, ROOT_URL . 'application' . DS);
 	define	('PUBLIC_URL'		, ROOT_URL . 'public' . DS);
 	define	('TEMPLATE_URL'		, PUBLIC_URL . 'template' . DS);
@@ -21,5 +21,5 @@
 	define ('DB_HOST'			, 'localhost');
 	define ('DB_USER'			, 'root');						
 	define ('DB_PASS'			, '');						
-	define ('DB_NAME'			, 'manage_user');						
-	define ('DB_TABLE'			, 'user');						
+	define ('DB_NAME'			, 'mvc_multy');						
+	define ('DB_TABLE'			, 'group');						

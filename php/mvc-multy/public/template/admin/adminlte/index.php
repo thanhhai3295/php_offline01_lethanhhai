@@ -5,7 +5,7 @@
   <?php echo $this->_metaName;?>
   <?php echo $this->_title;?>
   <?php echo $this->_cssFiles;?>
-  <?php echo $this->_jsFiles;?>
+  
 
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 </head>
@@ -74,6 +74,7 @@
 <!-- ./wrapper -->
 
 <?php //  include 'html/script.php';?>
+<?php echo $this->_jsFiles;?>
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
