@@ -7,6 +7,11 @@ class Model
      *
      * @var MysqliDb
      */
+    protected $table;
+
+    public function setTable($table){
+		$this->table = $table;
+	}
     protected static $_instance;
 
     /**

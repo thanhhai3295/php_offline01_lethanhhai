@@ -64,4 +64,8 @@ class Controller{
 	public function getParams($arrParam){
 		$this->_arrParam= $arrParam;
 	}
+	public function redirect($module='admin',$controller = 'index', $action = 'dashboard'){
+		header("location: index.php?module=$module&controller=$controller&action=$action");
+		exit();
+	}
 }

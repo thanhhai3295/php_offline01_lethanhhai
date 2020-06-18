@@ -6,8 +6,7 @@
   <?php echo $this->_title;?>
   <?php echo $this->_cssFiles;?>
   
-
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -56,7 +55,7 @@
   <div class="content-wrapper">
   <?php
     require_once APPLICATION_PATH. $this->_moduleName . DS . 'views' . DS .  $this->_fileView . '.php';
-    
+
   ?>
     <!-- Content Header (Page header) -->
     
@@ -76,7 +75,36 @@
 <?php //  include 'html/script.php';?>
 <?php echo $this->_jsFiles;?>
 <script>
-  $.widget.bridge('uibutton', $.ui.button)
+  $.widget.bridge('uibutton', $.ui.button);
+  $("div.card.message").fadeTo(2000, 500).slideUp(500, function(){
+    $(".div.card.message").slideUp(500);
+  });
+
+  var url    = window.location.href;
+  var matchesAction = url.match(/action=([^&]*)/);
+  var action = matchesAction[1];
+  if (action == 'form') action = 'add';
+  var matchesController = url.match(/controller=([^&]*)/);
+  var controller = matchesController[1];
+  var child = document.querySelectorAll('ul.nav li.nav-item a.nav-link');
+  //var parent = document.querySelectorAll('li.nav-item.has-treeview.parent');
+  child.forEach(element => {
+    var childName = element.firstElementChild.nextElementSibling.textContent.trim().toLowerCase();
+    if(childName == action) {
+      var parent = element.parentElement.parentElement.parentElement.firstElementChild;
+      if(parent.tagName != 'A') {
+        element.classList.add('active');
+      }else {
+        if(parent.textContent.trim().toLowerCase() == controller) {
+        element.classList.add('active');
+        parent.classList.add('active');
+        parent.parentElement.classList.add('menu-open');
+        }
+      }
+    }
+  });
+  
+    
 </script>
 </body>
 </html>
