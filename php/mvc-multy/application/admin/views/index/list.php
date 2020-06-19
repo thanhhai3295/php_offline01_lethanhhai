@@ -72,8 +72,8 @@
                       $xhtml .= '<tr>
                                   <td>
                                     <div class="icheck-danger d-inline">
-                                      <input type="checkbox" id="checkboxDanger1">
-                                      <label for="checkboxDanger1">
+                                      <input type="checkbox" id="'.$value['id'].'">
+                                      <label for="'.$value['id'].'">
                                       </label>
                                     </div>
                                   </td>

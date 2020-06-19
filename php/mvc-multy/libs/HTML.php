@@ -62,12 +62,13 @@
 			}
 			echo $url;
 		}
-		public static function input($type, $name, $value, $placeholder){	
-			$xhtml = '<input type="'.$type.'" name="'.$name.'" class="form-control" value="'.$value.'" placeholder="'.$placeholder.'" />';
+		public static function input($type, $name, $value, $placeholder, $error = NULL){	
+			$invalid = ($error != NULL) ? 'is-invalid' : '';
+			$xhtml = '<input type="'.$type.'" name="'.$name.'" class="form-control '.$invalid.'" value="'.$value.'" placeholder="'.$placeholder.'" />';
 			echo $xhtml;
 		}
 		public static function error($error) {
-			echo '<p class="text-danger position-absolute" style="top:50%;transform:translateY(-50%);right:-34%;width:160px">'.$error.'</p>';
+			echo '<span id="exampleInputEmail1-error" class="error invalid-feedback d-block">'.$error.'</span>';
 		}
 		public static function select($option) {
 			$data = ['1' => 'active', '0' => 'inactive'];

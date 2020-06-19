@@ -25,13 +25,19 @@
             <div class="form-group row">
               <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
               <div class="col-sm-10">
-                <?php HTML::input('text','name',isset($this->name) ? $this->name : '','Name') ?>
+                <?php 
+                  HTML::input('text','name',isset($this->name) ? $this->name : '','Name',isset($this->error['name']) ? $this->error['name'] : ''); 
+                  HTML::error(isset($this->error['name'])?$this->error['name']:'');
+                ?>
               </div>
             </div>
             <div class="form-group row">
               <label for="inputPassword3" class="col-sm-2 col-form-label">Ordering</label>
               <div class="col-sm-10">
-              <?php HTML::input('text','ordering',isset($this->ordering) ? $this->ordering : '','Ordering') ?>
+              <?php 
+                HTML::input('text','ordering',isset($this->ordering) ? $this->ordering : '','Ordering',isset($this->error['ordering']) ? $this->error['ordering'] : '');
+                HTML::error(isset($this->error['ordering'])?$this->error['ordering']:''); 
+              ?>
               </div>
             </div>
             <div class="form-group row">
@@ -45,7 +51,6 @@
           <div class="card-footer">
             <?php $str = explode('/',$this->_title); ?>
             <button type="submit" class="btn btn-info indigo" name="submit"><?php echo $str[1]; ?></button>
-            
           </div>
           <!-- /.card-footer -->
         </form>

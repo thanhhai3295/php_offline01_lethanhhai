@@ -20,7 +20,6 @@ class GroupController extends Controller{
 
 	}
 	public function formAction(){
-		
 		$this->_view->_title	 = 'GROUP / ADD';
 		if(isset($_GET['id'])) { 
 			$this->_view->_title	 = 'GROUP / EDIT';
@@ -32,22 +31,20 @@ class GroupController extends Controller{
 			$this->_view->ordering = $item[0]['ordering'];
 		}
 		if(isset($_POST['submit'])) {
-			// $val = new validate();
-			// $val->name('name')->value($_POST['name'])->required();
-			// $val->name('ordering')->value($_POST['ordering'])->required();
+			$val = $this->_validate;
+			$val->name('name')->value($_POST['name'])->required();
+			$val->name('ordering')->value($_POST['ordering'])->required();
 			$this->_view->name			= $_POST['name'];
 			$this->_view->status 		= $_POST['status'];
 			$this->_view->ordering	= $_POST['ordering'];
 			$this->_view->created		= date_create('now')->format('Y-m-d');
-			// if($val->isSuccess()){
-		
-				
-			$this->_model->processItem((array)$this->_view);		
-			Session::set('msgProcess',isset($_GET['id']) ? 'Edit User Success!' : 'Add User Success!');
-			$this->redirect('admin','group','list');		
-			// } else {
-			// 	$this->view->error = $val->getErrors();
-			// }
+			if($val->isSuccess()){	
+				$this->_model->processItem((array)$this->_view);		
+				Session::set('msgProcess',isset($_GET['id']) ? 'Edit User Success!' : 'Add User Success!');
+				$this->redirect('admin','group','list');		
+			} else {
+				$this->_view->error = $val->getErrors();
+			}
 		}
 		$this->_view->render('index/form');
 	}

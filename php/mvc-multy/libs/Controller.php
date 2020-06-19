@@ -12,16 +12,21 @@ class Controller{
 	
 	// Params (GET - POST)
 	public $_arrParam;
+
+	public $_validate;
 	
 	public function __construct($arrParams){
+		
 		$this->setModel($arrParams['module'], $arrParams['controller']);
 		$this->setTemplate($this);
 		$this->setView($arrParams['module']);
 		$this->setParams($arrParams);
+		$this->setValidate($arrParams);
 	}
 	
 	// SET MODEL
 	public function setModel($moduleName, $modelName){
+		
 		$modelName = ucfirst($modelName) . 'Model';
 		$path = APPLICATION_PATH . $moduleName . DS . 'models' .  DS . $modelName . '.php';
 		if(file_exists($path)){
@@ -67,5 +72,13 @@ class Controller{
 	public function redirect($module='admin',$controller = 'index', $action = 'dashboard'){
 		header("location: index.php?module=$module&controller=$controller&action=$action");
 		exit();
+	}
+	public function setValidate($arrParams){
+		$validateName = ucfirst($arrParams['controller']) . 'Validate';
+		$path = APPLICATION_PATH . $arrParams['module'] . DS . 'validate' .  DS . $validateName . '.php';
+		if(file_exists($path)){
+			require_once $path;
+			$this->_validate	= new $validateName();
+		}
 	}
 }
