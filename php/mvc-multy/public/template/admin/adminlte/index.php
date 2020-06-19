@@ -5,8 +5,6 @@
   <?php echo $this->_metaName;?>
   <?php echo $this->_title;?>
   <?php echo $this->_cssFiles;?>
-  
-  
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -72,7 +70,7 @@
 </div>
 <!-- ./wrapper -->
 
-<?php //  include 'html/script.php';?>
+
 <?php echo $this->_jsFiles;?>
 <script>
   $.widget.bridge('uibutton', $.ui.button);

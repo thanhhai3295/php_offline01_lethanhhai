@@ -63,33 +63,39 @@
                   <tbody>
                   <?php 
                     $xhtml = '';
+                    if (!empty($this->items)) {
+                      foreach ($this->items as $key => $value) {
+                        $status   = HTML::showStatus($value['status'],$value['id']);
+                        $created  = HTML::dateFormat($value['created']);
+                        $name     = HTML::addSpan($value['name']);
+                        $urlForm  = URL::createLink('admin','group','form',['id' => $value['id']]);
+                        $xhtml .= '<tr>
+                                    <td>
+                                      <div class="icheck-danger d-inline">
+                                        <input type="checkbox" id="'.$value['id'].'">
+                                        <label for="'.$value['id'].'">
+                                        </label>
+                                      </div>
+                                    </td>
+                                    <td>'.$value['id'].'</td>
+                                    <td>'.$name.'</td>
+                                    <td>'.$created.'</td>
+                                    <td>'.$value['ordering'].'</td>
+                                    <td>'.$status.'</td>
+                                    <td>
+                                      <div class="action">
+                                        <a href="'.$urlForm.'" class="btn btn-primary"><i class="far fa-edit"></i> Edit</a>
+                                        <a class="btn btn-danger"><i class="fas fa-times"></i> Delete</a>
+                                      </div>
+                                    </td>
+                                  </tr>';
+                      } 
+                    }else {
+                      $xhtml = '<tr><td colspan="7" class="p-0"><div class="alert alert-danger alert-dismissible m-0">
+                      <h5 class="m-0"><i class="icon fas fa-ban"></i>NO DATA FOUND</h5>
+                    </div></td></tr>';
+                    }
                     
-                    foreach ($this->items as $key => $value) {
-                      $status   = HTML::showStatus($value['status'],$value['id']);
-                      $created  = HTML::dateFormat($value['created']);
-                      $name     = HTML::addSpan($value['name']);
-                      $urlForm  = URL::createLink('admin','group','form',['id' => $value['id']]);
-                      $xhtml .= '<tr>
-                                  <td>
-                                    <div class="icheck-danger d-inline">
-                                      <input type="checkbox" id="'.$value['id'].'">
-                                      <label for="'.$value['id'].'">
-                                      </label>
-                                    </div>
-                                  </td>
-                                  <td>'.$value['id'].'</td>
-                                  <td>'.$name.'</td>
-                                  <td>'.$created.'</td>
-                                  <td>'.$value['ordering'].'</td>
-                                  <td>'.$status.'</td>
-                                  <td>
-                                    <div class="action">
-                                      <a href="'.$urlForm.'" class="btn btn-primary"><i class="far fa-edit"></i> Edit</a>
-                                      <a class="btn btn-danger"><i class="fas fa-times"></i> Delete</a>
-                                    </div>
-                                  </td>
-                                </tr>';
-                  }
                   echo $xhtml;
                   ?>       
                   </tbody>
