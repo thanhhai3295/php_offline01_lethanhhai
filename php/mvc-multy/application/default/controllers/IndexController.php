@@ -10,7 +10,7 @@ class IndexController extends Controller{
 	}
 	
 	public function indexAction(){
-		echo '<h3>' . __METHOD__ . '</h3>';
+		$this->redirect('admin','index','dashboard');
 	}
 	
 }
