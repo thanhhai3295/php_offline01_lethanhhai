@@ -8,6 +8,7 @@ class IndexController extends Controller{
 		$this->_templateObj->load();
 	}
 	public function dashboardAction(){
+		$this->_view->countGroup = $this->_model->countItem(TBL_GROUP);
 		$this->_view->render('index/dashboard');
 	}
 	

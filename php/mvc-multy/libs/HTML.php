@@ -4,7 +4,7 @@
 		public static function showStatus($status, $id=null) {
 			$xhtml = '';
 			$url = URL::createLink('admin','group','status',['id' => $id, 'status' => $status]);
-			if($status == 0) {
+			if($status == 'inactive') {
 				$xhtml = '<a href="'.$url.'" class="btn btn-block btn-warning status"><i class="fas fa-exclamation"></i> Inactive</a>';
 			}else {
 				$xhtml = '<a href="'.$url.'" class="btn btn-block btn-success status"><i class="fas fa-check"></i> Active</a>';
@@ -12,8 +12,8 @@
 		return $xhtml;
 		}
 		public static function addSpan($str){
-			if(isset($_GET['search'])) {
-				$search = $_GET['search'];
+			if(isset($_POST['filter_search'])) {
+				$search = $_POST['filter_search'];
 				return str_replace($search, "<span class='red'>$search</span>", $str);
 			}
 			else {
@@ -59,23 +59,24 @@
 				if($key == 'search' || $key == 'filter') {
 					$url .= "&$key=$value";
 				}
-			}
+			} 
 			echo $url;
 		}
 		public static function input($type, $name, $value, $placeholder, $error = NULL){	
 			$invalid = ($error != NULL) ? 'is-invalid' : '';
 			$xhtml = '<input type="'.$type.'" name="'.$name.'" class="form-control '.$invalid.'" value="'.$value.'" placeholder="'.$placeholder.'" />';
-			echo $xhtml;
+			return $xhtml;
 		}
 		public static function error($error) {
-			echo '<span id="exampleInputEmail1-error" class="error invalid-feedback d-block">'.$error.'</span>';
+			return '<span id="exampleInputEmail1-error" class="error invalid-feedback d-block">'.$error.'</span>';
 		}
 		public static function select($option) {
-			$data = ['1' => 'active', '0' => 'inactive'];
-			$xhtml = '<select class="form-control" style="width: 100%;" name="status">';
+			
+			$data = ['default','active','inactive'];
+			$xhtml = '<select class="form-control" style="width: 100%;" name="form[status]">';
 			foreach($data as $key => $value) {
-				$select = ($option == $key) ? 'selected' : '';
-				$xhtml .= '<option value="'.$key.'"'.$select.'>'.ucfirst($value).'</option>';
+				$select = ($value == $option) ? 'selected' : '';
+				$xhtml .= '<option value="'.$value.'"'.$select.'>'.ucfirst($value).'</option>';
 			}
 			$xhtml .= '</select>';
 			echo $xhtml;

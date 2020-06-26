@@ -101,8 +101,22 @@
       }
     }
   });
-  
-    
+  function changePage(page){
+	$('input[name=filter_page]').val(page);
+	$('#adminForm').submit();
+  }
+
+  function sortList(column, order){
+	$('input[name=filter_column]').val(column);
+	$('input[name=filter_column_dir]').val(order);
+	$('#adminForm').submit();
+  }
+
+  function filterStatus(status) {
+    $('input[name=filter_status]').val(status);
+    $('#adminForm').submit();
+  }
+
 </script>
 </body>
 </html>

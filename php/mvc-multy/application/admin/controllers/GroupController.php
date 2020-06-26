@@ -6,53 +6,61 @@ class GroupController extends Controller{
 		$this->_templateObj->setFileTemplate('index.php');
 		$this->_templateObj->setFileConfig('template.ini');
 		$this->_templateObj->load();
+		$this->name = $this->_arrParam['controller'];
 		Session::init();
 	}
-
+  
 	public function listAction(){
-		$params['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
-		if(isset($_GET['search'])) $params['search'] = $_GET['search'];
-		if(isset($_GET['filter'])) $params['filter'] = (int)$_GET['filter'];
-		$this->_view->items		 = $this->_model->listItems($params);
-		$this->_view->totalPage = $this->_model->totalPages;
-		$this->_view->_title	 = 'GROUP / LIST';
-		$this->_view->render('index/list');
+		$this->_view->_title	 = strtoupper($this->name).' / LIST';
+		$totalItems						 = $this->_model->countItem($this->_arrParam);
+		$configPagination 		 = array('totalItemsPerPage'	=> 4, 'pageRange' => 3);
+		$this->setPagination($configPagination);
+		$this->_view->pagination	= new Pagination($totalItems, $this->_pagination);
+		$this->_view->items			  = $this->_model->listItems($this->_arrParam);
+		$this->_view->countStatus = $this->_model->countStatus($this->_arrParam);
+		$this->_view->render($this->name.'/list');
 
 	}
 	public function formAction(){
-		$this->_view->_title	 = 'GROUP / ADD';
-		if(isset($_GET['id'])) { 
-			$this->_view->_title	 = 'GROUP / EDIT';
-			$this->_view->id = $_GET['id'];
-			$item = $this->_model->getItem($this->_view->id);
-			if(empty($item)) $this->redirect('admin','group','list');		
-			$this->_view->name 		= $item[0]['name'];
-			$this->_view->status 	= $item[0]['status'];
-			$this->_view->ordering = $item[0]['ordering'];
+		$this->_view->_title	 = strtoupper($this->name).' / ADD';
+		if(isset($this->_arrParam['id'])){
+			$this->_view->_title	 		= strtoupper($this->name).' / EDIT';
+			$this->_arrParam['form']	= $this->_model->infoItem($this->_arrParam);
+			if(empty($this->_arrParam['form'])) $this->redirect('admin',$this->name,'list');	
 		}
-		if(isset($_POST['submit'])) {
-			$val = $this->_validate;
-			$val->name('name')->value($_POST['name'])->required();
-			$val->name('ordering')->value($_POST['ordering'])->required();
-			$this->_view->name			= $_POST['name'];
-			$this->_view->status 		= $_POST['status'];
-			$this->_view->ordering	= $_POST['ordering'];
-			$this->_view->created		= date_create('now')->format('Y-m-d');
-			if($val->isSuccess()){	
-				$this->_model->processItem((array)$this->_view);		
-				Session::set('msgProcess',isset($_GET['id']) ? 'Edit User Success!' : 'Add User Success!');
-				$this->redirect('admin','group','list');		
+		if(isset($this->_arrParam['submit'])) {
+			$this->_arrParam['form']['name']		 = $_POST['form']['name'];
+			$this->_arrParam['form']['status'] 	 = $_POST['form']['status'];
+			$this->_arrParam['form']['ordering'] = $_POST['form']['ordering'];
+			$validate = new Validate($this->_arrParam['form']);
+			$validate->addRule('name', 'string', array('min' => 3, 'max' => 255))
+					->addRule('ordering', 'int', array('min' => 1, 'max' => 100))
+					->addRule('status', 'status', array('deny' => array('default')));
+			$validate->run();
+			$this->_arrParam['form'] = $validate->getResult();
+			if($validate->isValid() == false){
+				$this->_view->errors = $validate->getError();
 			} else {
-				$this->_view->error = $val->getErrors();
+				$this->_model->saveItem($this->_arrParam);		
+				Session::set('msgSuccess',isset($this->_arrParam['id']) ? 'Edit User Success!' : 'Add User Success!');
+				$this->redirect('admin',$this->name,'list');		
 			}
 		}
-		$this->_view->render('index/form');
+		$this->_view->arrParam = $this->_arrParam;
+		$this->_view->render($this->name.'/form');
 	}
 	public function statusAction(){
-		if(isset($_GET['id'])) $params['id'] = $_GET['id'];
-		if(isset($_GET['status'])) $params['status'] = ((int)$_GET['status'] == 0) ? 1 : 0;
+		$params['id'] = $this->_arrParam['id'];
+		$params['status'] = ($this->_arrParam['status'] == 'active') ? 'inactive' : 'active';
 		$this->_model->changeStatus($params);
-		Session::set('msg','Change Status Success!');
-		$this->redirect('admin','group','list');
+		Session::set('msgSuccess','Change Status Success!');
+		$this->redirect('admin',$this->name,'list');
 	}
-}
+
+	public function deleteAction() {
+		$id = $this->_arrParam['id'];
+		$this->_model->deleteItem($id);
+		Session::set('msgSuccess','Delete Item Success!');
+		$this->redirect('admin',$this->name,'list');
+	}
+} 

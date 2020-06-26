@@ -4,7 +4,7 @@
       <!-- small box -->
       <div class="small-box bg-success">
          <div class="inner">
-            <h3><?php HTML::stat('group') ?></h3>
+            <h3><?php echo $this->countGroup ?></h3>
             <p>Group</p>
          </div>
          <div class="icon">
