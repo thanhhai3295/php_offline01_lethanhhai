@@ -12,8 +12,6 @@ class Controller{
 	
 	// Params (GET - POST)
 	public $_arrParam;
-
-	// public $_validate;
 	
 	protected $_pagination	= array(
 		'totalItemsPerPage'	=> 3,
@@ -30,8 +28,9 @@ class Controller{
 		
 		$arrParams['pagination'] = $this->_pagination;
 		$this->setParams($arrParams);
-		// $this->setValidate($arrParams);
+		$this->setValidate($arrParams);
 		$this->_view->arrParam = $arrParams;
+		
 	}
 	
 	// SET MODEL
@@ -83,18 +82,18 @@ class Controller{
 		header("location: index.php?module=$module&controller=$controller&action=$action");
 		exit();
 	}
-	// public function setValidate($arrParams){
-	// 	$validateName = ucfirst($arrParams['controller']) . 'Validate';
-	// 	$path = APPLICATION_PATH . $arrParams['module'] . DS . 'validate' .  DS . $validateName . '.php';
-	// 	if(file_exists($path)){
-	// 		require_once $path;
-	// 		$this->_validate	= new $validateName();
-	// 	}
-	// }
+	public function setValidate($arrParams){
+		$validateName = ucfirst($arrParams['controller']) . 'Validate';
+		$path = APPLICATION_PATH . $arrParams['module'] . DS . 'validate' .  DS . $validateName . '.php';
+		if(file_exists($path)){
+			require_once $path;
+		}
+	}
 	public function setPagination($config){
 		$this->_pagination['totalItemsPerPage'] = $config['totalItemsPerPage'];
 		$this->_pagination['pageRange']			= $config['pageRange'];
 		$this->_arrParam['pagination']			= $this->_pagination;
 		$this->_view->arrParam							= $this->_arrParam;
 	}
+	
 }

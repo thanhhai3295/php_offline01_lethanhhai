@@ -2,20 +2,28 @@
   $nameTable = str_replace('/','',$this->_title);
   $action = explode('/',$this->_title);
   $action = trim($action[1]);
-
-  $inputName = Helper::createInput('text','form[name]',$this->arrParam['form']['name']??'','Name',$this->errors['name']??''); 
-  $errorName = Helper::createError($this->errors['name']??'');
-
-  $inputOrdering = Helper::createInput('text','form[ordering]',$this->arrParam['form']['ordering']??'','ordering',$this->errors['name']??''); 
-  $errorOrdering = Helper::createError($this->errors['ordering']??'');
-
-  $selectArray = [
+  $form = $this->arrParam??'';
+  
+  $arraySelect = [
     'default' => 'Choose Status',
     'active'  => 'Active',
     'inactive'=> 'Inactive'
   ];
-  $selectStatus = Helper::cmsSelectbox('form[status]','form-control',$selectArray,$this->arrParam['form']['status']??'');
-  $errorStatus = Helper::createError($this->errors['status']??'');
+  $arrayForm = [
+    [
+      'label' => Helper::createLabel('name'),
+      'input' => Helper::createInput('text','form[name]',$form['name']??'','Name',$this->errors['name']??'')
+    ],
+    [
+      'label' => Helper::createLabel('ordering'),
+      'input' => Helper::createInput('text','form[ordering]',$form['ordering']??'','Ordering',$this->errors['ordering']??'')
+    ],
+    [
+      'label' => Helper::createLabel('status'),
+      'select' => Helper::cmsSelectbox('form[status]','form-control',$arraySelect,$form['status']??'',null,$this->errors['status']??'')
+    ]
+  ];
+
   echo Helper::createTitle($this->_title); 
 ?>
     <!-- Main content -->
@@ -29,33 +37,10 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form class="form-horizontal" method="POST" action="">
-          <div class="card-body">
-            <div class="form-group row">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
-              <div class="col-sm-10">
-                <?php echo $inputName.$errorName;?>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputPassword3" class="col-sm-2 col-form-label">Ordering</label>
-              <div class="col-sm-10">
-                <?php echo $inputOrdering.$errorOrdering;?>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Status</label>
-              <div class="col-sm-10">
-                <?php echo $selectStatus.$errorStatus ?>
-              </div>
-            </div>
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer">
-            <button type="submit" class="btn btn-info indigo" name="submit"><?php echo $action; ?></button>
-          </div>
-          <!-- /.card-footer -->
+        <form class="form-horizontal" method="POST" action="" id="adminForm">
+          <?php echo Helper::createForm($arrayForm,$action); ?>
         </form>
+
         </div>
 
       </div>  <!-- col-md-6 -->

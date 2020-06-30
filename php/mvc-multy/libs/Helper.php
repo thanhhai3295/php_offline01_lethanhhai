@@ -72,7 +72,7 @@ class Helper{
 	}
 	
 	// Create Selectbox
-	public static function cmsSelectbox($name, $class, $arrValue, $keySelect = 'default', $style = null){
+	public static function cmsSelectbox($name, $class, $arrValue, $keySelect = 'default', $style = null, $error = null){
 		$xhtml = '<select style="'.$style.'" name="'.$name.'" class="'.$class.'" >';
 		foreach($arrValue as $key => $value){
 			if($key == $keySelect){
@@ -82,6 +82,7 @@ class Helper{
 			}
 		}
 		$xhtml .= '</select>';
+		$xhtml .= Helper::createError($error);
 		return $xhtml;
 	}
 	
@@ -223,6 +224,7 @@ class Helper{
 	public static function createInput($type, $name, $value, $placeholder, $error = NULL){	
 		$invalid = ($error != NULL) ? 'is-invalid' : '';
 		$xhtml = '<input type="'.$type.'" name="'.$name.'" class="form-control '.$invalid.'" value="'.$value.'" placeholder="'.$placeholder.'" />';
+		$xhtml .= Helper::createError($error);
 		return $xhtml;
 	}
 	public static function createError($error) {
@@ -239,4 +241,29 @@ class Helper{
 		$xhtml .= '</select>';
 		echo $xhtml;
 	}
+
+	public static function createLabel($value){
+		return '<label for="inputEmail3" class="col-sm-2 col-form-label">'.ucfirst($value).'</label>';
+	}
+	public static function createForm($data,$action){
+		$xhtml = '<div class="card-body">';
+		foreach ($data as $key => $value) {
+			$xhtml .= '<div class="form-group row">';
+			$xhtml .= $value['label'];
+			$xhtml .= '<div class="col-sm-10">';
+				foreach ($value as $key02 => $value02) {
+					if($key02 == 'label') continue;
+					$xhtml .= $value02;
+				}
+			$xhtml .= '</div>';
+			$xhtml .= '</div>';
+		}
+
+		$xhtml .= '</div><div class="card-footer">
+								<a href="#" onclick="submitForm();" class="btn btn-info indigo">'.$action.'</a>
+							</div>';
+		$xhtml .= Helper::cmsInput('hidden','form[token]',time());
+		return $xhtml;
+	}
+
 }

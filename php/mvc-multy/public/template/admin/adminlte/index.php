@@ -47,7 +47,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <?php include 'html/aside.php'; ?>
+  <?php  //include 'html/aside.php'; ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -115,6 +115,10 @@
   function filterStatus(status) {
     $('input[name=filter_status]').val(status);
     $('#adminForm').submit();
+  }
+
+  function submitForm(){
+	  $('#adminForm').submit();
   }
 
 </script>
